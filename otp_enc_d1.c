@@ -6,9 +6,11 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <netdb.h>
-#include <strings.h>
+#include <string.h>
 
 int main(){
+
+ char str[100];
 
  // file descriptors to be used
  int sock, connection_fd;
@@ -38,9 +40,16 @@ int main(){
  bind(sock, (struct sockaddr *) &server, sizeof(server));
 
  // start to listen. Allow at most 5 connections
- //listen(sock, 5);  
+ listen(sock, 5);  
 
- //connection_fd = accept(server, (struct server*) NULL, NULL);
+ connection_fd = accept(sock, (struct sockaddr*) NULL, NULL);
 
+ while(1){
+
+  bzero(str,100);
+  read(connection_fd, str, 100);
+  printf("Echo,", str);
+  write(connection_fd, str, strlen(str)+1);
+ }
 
 }
