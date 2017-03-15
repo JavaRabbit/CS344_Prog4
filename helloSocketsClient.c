@@ -11,11 +11,14 @@ int main(int argc, char **argv){
  char recvline[1000];
  struct sockaddr_in servaddr;
 
+ // get portNumber from argv
+ int portNumber = atoi(argv[1]);
+
  sockfd=socket(AF_INET, SOCK_STREAM, 0);
  bzero(&servaddr, sizeof servaddr);
 
  servaddr.sin_family = AF_INET;
- servaddr.sin_port = htons(22000);
+ servaddr.sin_port = htons(portNumber);
 
  inet_pton(AF_INET, "127.0.0.1", &(servaddr.sin_addr));
 

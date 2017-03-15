@@ -8,9 +8,9 @@
 #include <netdb.h>
 #include <string.h>
 
-int main(){
+int main(int argc, char *argv[]){
 
- char str[100];
+ char str[1000];
 
  // file descriptors to be used
  int sock, connection_fd;
@@ -18,6 +18,10 @@ int main(){
  // struct to hold IP address and port numbers
  struct sockaddr_in server;
  int len;
+ int portNumber;
+
+ // assign portNumber to argv[1]
+ portNumber = atoi(argv[1]);
 
  //  listen for connections.  
  if((sock = socket(AF_INET, SOCK_STREAM, 0)) == -1){
@@ -31,8 +35,8 @@ int main(){
  // set addressing scheme to AF_INET  (IP)
  server.sin_family = AF_INET;
  
- //  Listen on port 8080
- server.sin_port = htons(22000);  // port number
+ //  Listen on port specified port
+ server.sin_port = htons(portNumber);  // port number
  
  // Allow any IP to connect
  server.sin_addr.s_addr = htons(INADDR_ANY);
@@ -46,8 +50,8 @@ int main(){
 
  while(1){
 
-  bzero(str,100);
-  read(connection_fd, str, 100);
+  bzero(str,1000);
+  read(connection_fd, str, 1000);
   printf("Echo,", str);
   write(connection_fd, str, strlen(str)+1);
  }
