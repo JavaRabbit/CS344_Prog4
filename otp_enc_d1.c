@@ -52,7 +52,10 @@ int main(int argc, char *argv[]){
 
   bzero(str,1000);
   read(connection_fd, str, 1000);
-  printf("Echo,", str);
+
+  //printf("Echo,", str);
+  
+  //  send back to the client
   write(connection_fd, str, strlen(str)+1);
  }
 

@@ -82,16 +82,46 @@ int main(int argc, char **argv){
 
  connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
- while(1){
+ //while(1){
+  // clear send and recieve lines
   bzero(sendline, 1000);
   bzero(recvline, 1000);
-  fgets(sendline, 1000, stdin); 
+ 
+  // ask the user for a line
+  printf("Enter Something:\n");
+ 
+
+  // read string from user
+  //fgets(sendline, 1000, stdin); 
+
+  FILE *fp_plain = fopen(argv[1], "r");
+  if(fp_plain == NULL){
+   printf("No file found\n");
+  } else {
+   printf("file is found\n");
+  }
+
+  /*
+  int jj;
+  for(jj = 0; ferror(fp_plain) ==0; jj++){
+   scanf(fp_plain, "%s", sendline);
+  } 
+  */
+  fscanf(fp_plain, "%s", sendline);
+  close(fp_plain); 
   
+  printf("the text in plaintext is %s\n", sendline);
+
+  // write send line from sockfd
   write(sockfd, sendline, strlen(sendline)+1);
+  
+  // read from sockfd the recvline
   read(sockfd, recvline, 1000);
+
+  
   printf("%s", recvline);
 
- }// end while
+// }// end while
 
 }
 
