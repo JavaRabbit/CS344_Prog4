@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]){
 
- printf("Hello keygen\n");
+ //printf("Hello keygen\n");
 
  // create a random string of length specified by user
  
@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
  }
 
 
- printf("%d\n", atoi(argv[1])+3);
+ //printf("%d\n", atoi(argv[1])+3);
 
  // store into variable the size that the user wants
  int sizeWanted = atoi(argv[1]);

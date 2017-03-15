@@ -32,7 +32,7 @@ int main(){
  server.sin_family = AF_INET;
  
  //  Listen on port 8080
- server.sin_port = htons(8080);  // port number
+ server.sin_port = htons(22000);  // port number
  
  // Allow any IP to connect
  server.sin_addr.s_addr = htons(INADDR_ANY);
