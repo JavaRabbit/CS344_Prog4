@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 int main(int argc, char *argv[]){
 
@@ -33,8 +34,12 @@ int main(int argc, char *argv[]){
  // create a string of length argv[1] + 1
  char toReturn[sizeWanted + 1]; 
  int i;
+ srand(time(NULL));
+ //char randomLetter = 'A' + (rand()%26);
+ 
  for(i = 0; i < sizeWanted; i++){
-  toReturn[i] = 'a';
+  char randomLetter = 'A' + (rand()%26);
+  toReturn[i] = randomLetter;
  }
 
  // Spec: the last character should be a new line
