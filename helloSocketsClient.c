@@ -10,6 +10,7 @@ int main(int argc, char **argv){
  int sockfd, n;
  char sendline[1000];
  char recvline[1000];
+ char sendKey[1000];
  struct sockaddr_in servaddr;
 
  // get portNumber from argv at index 3
@@ -86,6 +87,7 @@ int main(int argc, char **argv){
   // clear send and recieve lines
   bzero(sendline, 1000);
   bzero(recvline, 1000);
+  bzero(sendKey, 1000);
  
   // ask the user for a line
   printf("Enter Something:\n");
@@ -101,25 +103,49 @@ int main(int argc, char **argv){
    printf("file is found\n");
   }
 
-  /*
-  int jj;
-  for(jj = 0; ferror(fp_plain) ==0; jj++){
-   scanf(fp_plain, "%s", sendline);
-  } 
-  */
+  //  copy the plainText string into sendLine 
   fscanf(fp_plain, "%s", sendline);
   close(fp_plain); 
   
   printf("the text in plaintext is %s\n", sendline);
 
+
+  /* Read the key  */
+  FILE *fp_key = fopen(argv[2], "r");
+  if(fp_key == NULL){
+    printf("no key found\n");
+  } else {
+   // printf("file found\n");
+ }
+
+ fscanf(fp_key, "%s", sendKey);
+ close(fp_key);
+
+ printf("the key is: %s\n", sendKey);
+
+
+
+
+
   // write send line from sockfd
   write(sockfd, sendline, strlen(sendline)+1);
   
-  // read from sockfd the recvline
+  //  write send the key
+  write(sockfd, sendKey, strlen(sendKey)+1);
+
+   // read from sockfd the recvline
   read(sockfd, recvline, 1000);
 
   
-  printf("%s", recvline);
+  printf("%s\n", recvline);
+
+
+
+
+
+  char pp[100];
+  printf("Enter foo:\n");
+  fgets(pp, 100, stdin);
 
 // }// end while
 

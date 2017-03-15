@@ -11,6 +11,8 @@
 int main(int argc, char *argv[]){
 
  char str[1000];
+ char keyStr[1000];  // string to copy the key
+
 
  // file descriptors to be used
  int sock, connection_fd;
@@ -51,12 +53,13 @@ int main(int argc, char *argv[]){
  while(1){
 
   bzero(str,1000);
+  bzero(keyStr, 1000);
   read(connection_fd, str, 1000);
-
+  read(connection_fd, keyStr, 1000);
   //printf("Echo,", str);
   
   //  send back to the client
-  write(connection_fd, str, strlen(str)+1);
+  write(connection_fd, keyStr, strlen(str)+1);
  }
 
 }
