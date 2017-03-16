@@ -103,11 +103,11 @@ void doprocessing(int sock){
     if(keyStr[i] == 32){
       valKey = 27;
     } else {
-      valKey = valKey = 65;
+      valKey = keyStr[i] - 65;
    }
     
     // sum up the message and the key
-    int total = valStr + valKey;
+    int total = valStr - valKey;
 
     // check if the total is 27. If it is, reassign to 32
     if(total == 27){
@@ -115,7 +115,7 @@ void doprocessing(int sock){
     } else {
       origStr[i] = (total %27) + 65;
     }
-  }
+  }  // end for loop
 
 
 
