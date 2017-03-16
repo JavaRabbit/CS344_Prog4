@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <string.h>
-/*  SERVER  for ENCODING   */
+
 // prototypes
 void doprocessing(int sock);
 
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
 
   //  for each, for off a new process
   pid = fork(); 
-
+  
   /* This is the child process*/
   if(pid ==0){
    close(sock_fd);
@@ -85,8 +85,14 @@ void doprocessing(int sock){
   n = read(sock, str, 1000);
   p = read(sock, keyStr,1000);
 
+  //bzero(str,1000);
+  //bzero(keyStr, 1000);
+  //read(connection_fd, str, 1000);
+  //read(connection_fd, keyStr, 1000);
+  //printf("Echo,", str);
+  
   //  send back to the client
-  // write(connection_fd, keyStr, strlen(str)+1);
-  write(sock, str, strlen(keyStr)+1);
+ // write(connection_fd, keyStr, strlen(str)+1);
+ write(sock, keyStr, strlen(keyStr)+1);
 
 }

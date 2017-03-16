@@ -48,7 +48,7 @@ int main(int argc, char **argv){
   ++countPlainText;
  }
 
- printf("the plain text count is %d\n", countPlainText);
+ //printf("the plain text count is %d\n", countPlainText);
  
  /* Count the number of chars in the key file*/
  int keyCounter; 
@@ -61,7 +61,7 @@ int main(int argc, char **argv){
   // otherwise add to the count
   ++countKey;
  }
- printf("The key char count is %d\n", countKey);
+ //printf("The key char count is %d\n", countKey);
  
  /* If the char count of key is less than
  * the char count of plainText, show error to user
@@ -89,25 +89,22 @@ int main(int argc, char **argv){
   bzero(recvline, 1000);
   bzero(sendKey, 1000);
  
-  // ask the user for a line
-  printf("Enter Something:\n");
- 
-
-  // read string from user
+  
+// read string from user
   //fgets(sendline, 1000, stdin); 
 
   FILE *fp_plain = fopen(argv[1], "r");
   if(fp_plain == NULL){
    printf("No file found\n");
   } else {
-   printf("file is found\n");
+   //printf("file is found\n");
   }
 
   //  copy the plainText string into sendLine 
   fscanf(fp_plain, "%s", sendline);
   close(fp_plain); 
   
-  printf("the text in plaintext is %s\n", sendline);
+  //printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -121,10 +118,7 @@ int main(int argc, char **argv){
  fscanf(fp_key, "%s", sendKey);
  close(fp_key);
 
- printf("the key is: %s\n", sendKey);
-
-
-
+ //printf("the key is: %s\n", sendKey);
 
 
   // write send line from sockfd
@@ -139,13 +133,11 @@ int main(int argc, char **argv){
   
   printf("%s\n", recvline);
 
-
-
-
-
+  /*
   char pp[100];
   printf("Enter foo:\n");
   fgets(pp, 100, stdin);
+  */
 
 // }// end while
 
