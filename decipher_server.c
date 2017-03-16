@@ -75,6 +75,8 @@ int main(int argc, char *argv[]){
 
 } // end of main
 
+
+/*   THIS IS TO DECIPHER, aka go back to original */
 void doprocessing(int sock){
   int n,p;
   char str[1000];
@@ -88,7 +90,7 @@ void doprocessing(int sock){
 
   
   // string to hold the cipher. length should be str length
-  char cipherStr[strlen(str)+1];
+  char origStr[strlen(str)+1];
   int i;
   for(i = 0; i < strlen(str); i++){
     int valStr;
@@ -96,14 +98,12 @@ void doprocessing(int sock){
       valStr = 27;
     } else{  /* not a space so just -65 */
        valStr  = str[i] - 65;  // don't forget if space
-       valStr = valStr %27;
     }
     int valKey;
     if(keyStr[i] == 32){
       valKey = 27;
     } else {
-      valKey = keyStr[i] - 65;
-      valKey = valKey%27;
+      valKey = valKey = 65;
    }
     
     // sum up the message and the key
@@ -111,14 +111,14 @@ void doprocessing(int sock){
 
     // check if the total is 27. If it is, reassign to 32
     if(total == 27){
-      cipherStr[i] = 32;  // meaning that it will code to a space
+      origStr[i] = 32;  // meaning that it will code to a space
     } else {
-      cipherStr[i] = (total %27) + 65;
+      origStr[i] = (total %27) + 65;
     }
   }
 
 
 
-  write(sock, cipherStr, strlen(keyStr)+1);
+  write(sock, origStr, strlen(keyStr)+1);
 
 }
