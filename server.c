@@ -92,7 +92,21 @@ void doprocessing(int sock){
   //printf("Echo,", str);
 
   //  send back to the client
- // write(connection_fd, keyStr, strlen(str)+1);
- write(sock, str, strlen(keyStr)+1);
+  // write(connection_fd, keyStr, strlen(str)+1);
+  
+  // string to hold the cipher. length should be str length
+  char cipherStr[strlen(str)+1];
+  int i;
+  for(i = 0; i < strlen(str); i++){
+    int valStr = str[i] - 65;  // don't forget if space
+    int valKey = keyStr[i] - 65;
+    int total = valStr + valKey;
+    cipherStr[i] = (total %26) + 65;
+    
+  }
+
+
+
+  write(sock, cipherStr, strlen(keyStr)+1);
 
 }
