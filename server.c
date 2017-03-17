@@ -100,6 +100,11 @@ void doprocessing(int sock){
   //write(sock, &type, sizeof(char));
 
 
+  // recieve an int
+  int theSize;
+  recv(sock, &theSize, 4, 0); // 4 for int
+  printf("the size is %d\n", theSize);
+
 
   // receive the plain text
   n = recv(sock, str, 6,0);

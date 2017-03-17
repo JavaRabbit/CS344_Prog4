@@ -5,6 +5,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+// struct to help store size
+struct myPacket {
+ int theSize;
+ 
+};
+
+
+
 int main(int argc, char **argv){
 
  int sockfd, n;
@@ -73,7 +81,10 @@ int main(int argc, char **argv){
   exit(1);
  }
 
-
+ // else create a struct and assign the size
+ struct myPacket msg;
+ msg.theSize = countPlainText;
+ printf("the msg size is %d\n", msg.theSize);
 
  sockfd=socket(AF_INET, SOCK_STREAM, 0);
  bzero(&servaddr, sizeof servaddr);
@@ -138,6 +149,9 @@ int main(int argc, char **argv){
     close(sockfd);
   }
 
+
+  // try to send an int to the server
+  send(sockfd, &(msg.theSize), sizeof(msg.theSize), 0);
 
   // write send line from sockfd
   //write(sockfd, sendline, strlen(sendline)+1);
