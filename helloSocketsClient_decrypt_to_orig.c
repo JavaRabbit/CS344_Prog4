@@ -123,17 +123,6 @@ int main(int argc, char **argv){
 
   close(fp_key);
 
-   char type;
-   //  read the type from the server
-   recv(sockfd, &type, sizeof(char), 0);
-
-   // check if the type is 'e' for encyption
-   if(type == 'e'){
-     //printf("I can connect\n");
-  } else {
-    perror("Cannot connect to a Decryption Server.\n");
-    close(sockfd);
-  }
 
 
   // write send line from sockfd
