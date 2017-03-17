@@ -143,13 +143,13 @@ void doprocessing(int sock){
   for(i = 0; i < theSize-1; i++){
     int valStr;
     if(str[i] == 32){  // its a space
-      valStr = 27;
+      valStr = 26; // since A = 0, Z = 25, after z is 26
     } else{  // not a space so just -65 
-       valStr  = str[i] - 65;  // don't forget if space
+       valStr  = str[i] - 65;  // this will end up from 0-25 inclusive
     }
     int valKey;
     if(keyStr[i] == 32){
-      valKey = 27;
+      valKey = 26;  // if space, set to char after Z
     } else {
       valKey = keyStr[i] - 65;
    }
@@ -157,8 +157,14 @@ void doprocessing(int sock){
     // sum up the message and the key
     int total = valStr - valKey;
 
-    // check if the total is 27. If it is, reassign to 32
-    if(total == 27){
+    // if total is < 0
+    if(total < 0){
+      total = total + 27;  // bring up to a positive number
+    } //  eg if it is -1, it should be a space, so it bring
+    // it to 26, which will be a space 
+
+    // check if the total is 26. If it is, reassign to 32
+    if(total == 26){
       plainStr[i] = 32;  // meaning that it will code to a space
     } else {
       plainStr[i] = (total %27) + 65;
