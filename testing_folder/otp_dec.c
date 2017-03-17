@@ -128,11 +128,10 @@ int main(int argc, char **argv){
  char type;
  recv(sockfd, &type, sizeof(char), 0);
  //printf("the type is %c\n", type);
- printf("%c\n", type);
   if(type == 'd'){ 
    //printf("yes, I can decrypt\n");
   } else {
-   fprintf(stderr, "Connect connect to Encryption server");
+   fprintf(stderr, "Can not connect to Encryption server");
    close(sockfd);
 
  }
