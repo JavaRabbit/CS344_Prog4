@@ -127,11 +127,12 @@ int main(int argc, char **argv){
 
    char type;
    //  read the type from the server
-   recv(sockfd, &type, sizeof(char), 0);
-
+   //recv(sockfd, &type, sizeof(char), 0);
+   
+   type = 'e';
    // check if the type is 'e' for encyption
    if(type == 'e'){
-     //printf("I can connect\n");
+     printf("I can connect\n");
   } else {
     fprintf(stderr, "Cannot connect to a Decryption Server.\n");
     close(sockfd);
@@ -142,19 +143,19 @@ int main(int argc, char **argv){
   //write(sockfd, sendline, strlen(sendline)+1);
   
   // try  send  the plain text
-  send(sockfd, sendline, 200 ,0);  
+  send(sockfd, sendline, strlen(sendline) ,0);  
 
 
   //  try a receive  for dummy code
   char foo[440];
-  recv(sockfd, foo, 10,0);
+  //recv(sockfd, foo, 10,0);
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
-  send(sockfd, sendKey, 300, 0);
+  send(sockfd, sendKey, strlen(sendKey), 0);
    
    // read from sockfd the recvline
-  read(sockfd, recvline, 1000);
+  read(sockfd, recvline, 6);
 
   
   printf("%s\n", recvline);

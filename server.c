@@ -97,19 +97,20 @@ void doprocessing(int sock){
 
   // write a char to the client
   char type = 'e'; // e for encryption
-  write(sock, &type, sizeof(char));
+  //write(sock, &type, sizeof(char));
 
 
 
   // receive the plain text
-  n = recv(sock, str, 1000,0);
-  
+  n = recv(sock, str, 6,0);
+  printf("server got str as %s\n", str); 
+ 
   // some dummy code
-  write(sock, "foobar", 8);
+  //write(sock, "foobar", 8);
   
   // receive the key
-  p = recv(sock, keyStr,1000,0);
-
+  p = recv(sock, keyStr,6,0);
+  printf("server got keystr as %s\n", keyStr);
   
  
   // string to hold the cipher. length should be str length
