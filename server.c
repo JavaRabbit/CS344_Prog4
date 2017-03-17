@@ -142,24 +142,24 @@ void doprocessing(int sock){
   for(i = 0; i < theSize-1; i++){
     int valStr;
     if(str[i] == 32){  // its a space
-      valStr = 27;
+      valStr = 26;  // set to value after Z
     } else{  // not a space so just -65 
        valStr  = str[i] - 65;  // don't forget if space
-       valStr = valStr %27;
+       //valStr = valStr %27;
     }
     int valKey;
     if(keyStr[i] == 32){
-      valKey = 27;
+      valKey = 26;
     } else {
       valKey = keyStr[i] - 65;
-      valKey = valKey%27;
+      //valKey = valKey%27;
    }
     
     // sum up the message and the key
     int total = valStr + valKey;
 
     // check if the total is 27. If it is, reassign to 32
-    if(total == 27){
+    if(total == 26){  // meaning that it is the char after z
       cipherStr[i] = 32;  // meaning that it will code to a space
     } else {
       cipherStr[i] = (total %27) + 65;
