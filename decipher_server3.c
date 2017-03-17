@@ -99,26 +99,27 @@ void doprocessing(int sock){
   char type = 'e'; // e for encryption
   //write(sock, &type, sizeof(char));
 
-  //receive an int
+
+  // recieve an int
   int theSize;
-  recv(sock, &theSize, 4, 0); // 4 is size of int
+  recv(sock, &theSize, 4, 0); // 4 for int
   printf("the size is %d\n", theSize);
- 
+
 
   // receive the plain text
-  n = recv(sock, str, theSize,0);  //used to be 6
+  n = recv(sock, str, theSize,0);  // used to be 6
   printf("server got str as %s\n", str); 
  
   // some dummy code
   //write(sock, "foobar", 8);
   
   // receive the key
-  p = recv(sock, keyStr, theSize,0);
+  p = recv(sock, keyStr,theSize,0);  // used to be 6
   printf("server got keystr as %s\n", keyStr);
   
  
   // string to hold the cipher. length should be str length
-  char cipherStr[theSize];
+  char cipherStr[theSize+1];
   int i;
   for(i = 0; i < theSize; i++){
     int valStr;
