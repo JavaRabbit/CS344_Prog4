@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
 
  //  Call to socket function
  if((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
-  perror("socket: ");
+  fprintf(stderr, "socket error ");
  }
 
  // clear socket
@@ -84,6 +84,11 @@ void doprocessing(int sock){
   bzero(str,1000);
   bzero(keyStr,1000);
 
+  // write a char to the client, with 'd' for decrypt
+  char type = 'd';
+  write(sock, &type, sizeof(char));
+
+
   n = recv(sock, str, 1000,0);
   
   // some dummy code
@@ -93,7 +98,7 @@ void doprocessing(int sock){
   p = recv(sock, keyStr,1000,0);
 
 
-   printf("gets into fork");
+  // printf("gets into fork");
   // string to hold the cipher. length should be str length
   char origStr[strlen(str)+1];
   int i;

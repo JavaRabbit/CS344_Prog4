@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
   connection_fd = accept(sock_fd, (struct sockaddr*) &client_addr, &client);
 
   if(connection_fd < 0){
-   perror("error on accept\n");
+   fprintf(stderr, "error on accept\n");
    exit(1);
 
   }
@@ -90,10 +90,16 @@ int main(int argc, char *argv[]){
 
 void doprocessing(int sock){
   int n,p;
-  char str[1000];
-  char keyStr[1000];
-  bzero(str,1000);
-  bzero(keyStr,1000);
+  char str[7000];
+  char keyStr[7000];
+  bzero(str,7000);
+  bzero(keyStr,7000);
+
+  // write a char to the client
+  char type = 'e'; // e for encryption
+  write(sock, &type, sizeof(char));
+
+
 
   // receive the plain text
   n = recv(sock, str, 1000,0);

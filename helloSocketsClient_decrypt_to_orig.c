@@ -95,7 +95,8 @@ int main(int argc, char **argv){
 
   FILE *fp_plain = fopen(argv[1], "r");
   if(fp_plain == NULL){
-   printf("No file found\n");
+   fprintf(stderr, "No file found\n");
+   exit(1);
   } else {
    //printf("file is found\n");
   }
@@ -112,7 +113,7 @@ int main(int argc, char **argv){
   /* Read the key  */
   FILE *fp_key = fopen(argv[2], "r");
   if(fp_key == NULL){
-    printf("no key found\n");
+    fprintf(stderr, "no key found\n");
   } else {
     //printf("file found\n");
  }
@@ -126,12 +127,12 @@ int main(int argc, char **argv){
  // check if the type is 'd' for decryption
  char type;
  recv(sockfd, &type, sizeof(char), 0);
- printf("the type is %c\n", type);
+ //printf("the type is %c\n", type);
  printf("%c\n", type);
   if(type == 'd'){ 
-   printf("yes, I can decrypt\n");
+   //printf("yes, I can decrypt\n");
   } else {
-   perror("Connect connect to Encryption server");
+   fprintf(stderr, "Connect connect to Encryption server");
    close(sockfd);
 
  }
@@ -156,7 +157,7 @@ int main(int argc, char **argv){
   read(sockfd, recvline, 1000);
 
 
-
+  printf("%s\n", recvline);
 
 }
 

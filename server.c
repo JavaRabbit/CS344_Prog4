@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
   connection_fd = accept(sock_fd, (struct sockaddr*) &client_addr, &client);
 
   if(connection_fd < 0){
-   perror("error on accept\n");
+   fprintf(stderr, "error on accept\n");
    exit(1);
 
   }

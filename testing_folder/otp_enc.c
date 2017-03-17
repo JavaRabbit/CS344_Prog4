@@ -21,14 +21,16 @@ int main(int argc, char **argv){
  // Do character validaton
  FILE *plainText = fopen(argv[1], "r");
  if(plainText == NULL){
-  printf("no such file \n");
+  fprintf(stderr,"no such file \n");
+  exit(1);
  }
 
 
  // check that the key file is valid
  FILE *keyFile = fopen(argv[2], "r");
  if(keyFile == NULL){
-  printf("no such key file\n");
+  fprintf(stderr,"no such key file\n");
+  exit(1);
  }
 
  // compare char count for each file
@@ -95,13 +97,15 @@ int main(int argc, char **argv){
 
   FILE *fp_plain = fopen(argv[1], "r");
   if(fp_plain == NULL){
-   printf("No file found\n");
+   fprintf(stderr, "No file found\n");
   } else {
    //printf("file is found\n");
   }
 
   //  copy the plainText string into sendLine 
-  fscanf(fp_plain, "%s", sendline);
+  //fscanf(fp_plain, "%s", sendline);
+  
+  fgets(sendline, 7000, fp_plain) != NULL;
   close(fp_plain); 
   
   //printf("the text in plaintext is %s\n", sendline);
@@ -115,17 +119,30 @@ int main(int argc, char **argv){
     //printf("file found\n");
  }
 
- fscanf(fp_key, "%s", sendKey);
- close(fp_key);
+ //fscanf(fp_key, "%s", sendKey);
+ // try fgets 
+ fgets(sendKey, 7000, fp_key) != NULL;
 
- //printf("the key is: %s\n", sendKey);
+  close(fp_key);
+
+   char type;
+   //  read the type from the server
+   recv(sockfd, &type, sizeof(char), 0);
+
+   // check if the type is 'e' for encyption
+   if(type == 'e'){
+     //printf("I can connect\n");
+  } else {
+    fprintf(stderr, "Cannot connect to a Decryption Server.\n");
+    close(sockfd);
+  }
 
 
   // write send line from sockfd
   //write(sockfd, sendline, strlen(sendline)+1);
   
-  // try  send
-  send(sockfd, sendline, strlen(sendline)+1,0);  
+  // try  send  the plain text
+  send(sockfd, sendline, 200 ,0);  
 
 
   //  try a receive  for dummy code
@@ -134,7 +151,7 @@ int main(int argc, char **argv){
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
-  send(sockfd, sendKey, strlen(sendKey)+1, 0);
+  send(sockfd, sendKey, 300, 0);
    
    // read from sockfd the recvline
   read(sockfd, recvline, 1000);

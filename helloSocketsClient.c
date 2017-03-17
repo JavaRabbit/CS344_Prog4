@@ -21,14 +21,16 @@ int main(int argc, char **argv){
  // Do character validaton
  FILE *plainText = fopen(argv[1], "r");
  if(plainText == NULL){
-  printf("no such file \n");
+  fprintf(stderr,"no such file \n");
+  exit(1);
  }
 
 
  // check that the key file is valid
  FILE *keyFile = fopen(argv[2], "r");
  if(keyFile == NULL){
-  printf("no such key file\n");
+  fprintf(stderr,"no such key file\n");
+  exit(1);
  }
 
  // compare char count for each file
@@ -95,7 +97,7 @@ int main(int argc, char **argv){
 
   FILE *fp_plain = fopen(argv[1], "r");
   if(fp_plain == NULL){
-   printf("No file found\n");
+   fprintf(stderr, "No file found\n");
   } else {
    //printf("file is found\n");
   }
@@ -129,9 +131,9 @@ int main(int argc, char **argv){
 
    // check if the type is 'e' for encyption
    if(type == 'e'){
-     printf("I can connect\n");
+     //printf("I can connect\n");
   } else {
-    perror("Cannot connect to a Decryption Server.\n");
+    fprintf(stderr, "Cannot connect to a Decryption Server.\n");
     close(sockfd);
   }
 
