@@ -119,7 +119,7 @@ int main(int argc, char **argv){
   fgets(sendline, 100000, fp_plain) != NULL;
   close(fp_plain); 
   
-  //printf("the text in plaintext is %s\n", sendline);
+  printf("Cli: the text in plaintext is %s and len is %lu\n", sendline, strlen(sendline));
 
 
   /* Read the key  */
@@ -171,9 +171,9 @@ int main(int argc, char **argv){
    // read from sockfd the recvline
   read(sockfd, recvline, msg.theSize);  //used to be 6
   
-  printf("the length of recvline is %lu\n", strlen(recvline));
-  printf("%s\n", recvline);
-
+  printf("HSC:the length of recvline is %lu\n", strlen(recvline));
+  printf("HSC: %s\n", recvline);
+  printf("%s", recvline);
 
 
 }

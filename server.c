@@ -103,12 +103,12 @@ void doprocessing(int sock){
   // recieve an int
   int theSize;
   recv(sock, &theSize, 4, 0); // 4 for int
-  //printf("the size is %d\n", theSize);
+  printf("Server.c: the size is %d\n", theSize);
 
 
   // receive the plain text
   n = recv(sock, str, theSize,0);  // used to be 6
-  //printf("server got str as %s\n", str); 
+  printf("server got str as %s and len is %lu\n", str, strlen(str)); 
  
   // some dummy code
   //write(sock, "foobar", 8);
@@ -118,7 +118,7 @@ void doprocessing(int sock){
   //printf("server got keystr as %s\n", keyStr);
   
  
-  // string to hold the cipher. length should be str length
+  // string to hold the cipherstring. length should be str length
   char cipherStr[theSize];
   int i;
   for(i = 0; i < theSize-1; i++){
@@ -149,7 +149,7 @@ void doprocessing(int sock){
    }  // end for loop
 
   // tack on newline at end of returned string
-  cipherStr[theSize] = '\n';
+  cipherStr[theSize-1] = '\n';
   
   write(sock, cipherStr, theSize);
   //printf("after write\n");

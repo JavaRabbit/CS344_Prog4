@@ -118,10 +118,12 @@ void doprocessing(int sock){
   //printf("server got keystr as %s\n", keyStr);
   
  
-  // string to hold the cipher. length should be str length
-  char cipherStr[theSize+1];
+  // string to hold the PLAIN TEXT. length should be str length
+  char plainStr[theSize];
   int i;
-  for(i = 0; i < theSize; i++){
+  // loop only until size -1, because the last char is a newline
+  // we don't decipher newlines
+  for(i = 0; i < theSize-1; i++){
     int valStr;
     if(str[i] == 32){  // its a space
       valStr = 27;
@@ -140,13 +142,14 @@ void doprocessing(int sock){
 
     // check if the total is 27. If it is, reassign to 32
     if(total == 27){
-      cipherStr[i] = 32;  // meaning that it will code to a space
+      plainStr[i] = 32;  // meaning that it will code to a space
     } else {
-      cipherStr[i] = (total %27) + 65;
+      plainStr[i] = (total %27) + 65;
     }
    }  // end for loop
 
-  
-  write(sock, cipherStr, theSize);
+  // last char of string should be \n'
+  plainStr[theSize-1] = '\n';
+  write(sock, plainStr, theSize);
   //printf("after write\n");
 }
