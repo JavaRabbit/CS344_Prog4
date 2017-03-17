@@ -58,8 +58,22 @@ int main(int argc, char *argv[]){
  while(1){
   connection_fd = accept(sock_fd, (struct sockaddr*) &client_addr, &client);
 
+  if(connection_fd < 0){
+   perror("error on accept\n");
+   exit(1);
+
+  }
+
+
+
   //  for each, for off a new process
   pid = fork();
+  /*if(pid < 0){
+    perror("error on fork");
+    exit(1);
+  } */
+
+  printf("gets into fork");
 
   /* This is the child process*/
   if(pid ==0){
@@ -83,10 +97,11 @@ void doprocessing(int sock){
   bzero(keyStr,1000);
 
   n = read(sock, str, 1000);
-  p = read(sock, keyStr,1000);
+  //p = read(sock, keyStr,1000);
 
-
+  printf("get here after read\n");
   
+ 
   // string to hold the cipher. length should be str length
   char cipherStr[strlen(str)+1];
   int i;
@@ -94,7 +109,7 @@ void doprocessing(int sock){
     int valStr;
     if(str[i] == 32){  // its a space
       valStr = 27;
-    } else{  /* not a space so just -65 */
+    } else{  // not a space so just -65 
        valStr  = str[i] - 65;  // don't forget if space
        valStr = valStr %27;
     }
@@ -115,10 +130,9 @@ void doprocessing(int sock){
     } else {
       cipherStr[i] = (total %27) + 65;
     }
-  }
+   }  // end for loop
 
-
-
-  write(sock, cipherStr, strlen(keyStr)+1);
-
+  
+  write(sock, str, strlen(str)+1);
+  //printf("after write\n");
 }
