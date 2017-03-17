@@ -158,8 +158,9 @@ int main(int argc, char **argv){
 
 
   //  try a receive  for dummy code
-  char foo[440];
+  //char foo[440];
   //recv(sockfd, foo, 10,0);
+
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
@@ -168,8 +169,8 @@ int main(int argc, char **argv){
    // read from sockfd the recvline
   read(sockfd, recvline, msg.theSize); // used to be 6
 
-
-  printf("%s\n", recvline);
+  // don't add a newline here because recvline already has a 'n'
+  printf("%s", recvline);
 
 }
 
