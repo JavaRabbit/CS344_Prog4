@@ -8,8 +8,10 @@
 // struct to help store size
 struct myPacket{
  int theSize;
-
+ int theType;
 };
+
+
 int main(int argc, char **argv){
 
  int sockfd, n;
@@ -133,20 +135,24 @@ int main(int argc, char **argv){
  //printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
  close(fp_key);
 
- // check if the type is 'd' for decryption
- char type = 'd';
- //recv(sockfd, &type, sizeof(char), 0);
- //printf("the type is %c\n", type);
-  if(type == 'd'){ 
-   //printf("yes, I can decrypt\n");
-  } else {
-   fprintf(stderr, "Connect connect to Encryption server");
-   close(sockfd);
+ // try to send an int of 15 to the server. let 15 represent decryption
+ msg.theType = 15;
+ send(sockfd, &(msg.theType), 4, 0);  // int is size 4
 
+ // read the INT the server sent back
+ int intFromServer;
+ read(sockfd, &intFromServer, 4);
+ printf("client here: got back %d from server\n", intFromServer);
+
+
+ // if a wrong type of server is contacted, close connection
+ if(intFromServer != 15){
+  fprintf(stderr, "Cannot connect to Encryption server from this client\n");
+  close(sockfd);
  }
 
 
-  // try to send an int to the server
+  // try to send an int to the server for the size of the file
   send(sockfd, &(msg.theSize), sizeof(msg.theSize),0);
 
 
