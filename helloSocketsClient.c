@@ -122,26 +122,27 @@ int main(int argc, char **argv){
 
 
   // write send line from sockfd
-  write(sockfd, sendline, strlen(sendline)+1);
+  //write(sockfd, sendline, strlen(sendline)+1);
   
+  // try  send
+  send(sockfd, sendline, strlen(sendline)+1,0);  
+
+
+  //  try a receive  for dummy code
+  char foo[440];
+  recv(sockfd, foo, 10,0);
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
-
-
+  send(sockfd, sendKey, strlen(sendKey)+1, 0);
+   
    // read from sockfd the recvline
   read(sockfd, recvline, 1000);
 
   
   printf("%s\n", recvline);
 
-  /*
-  char pp[100];
-  printf("Enter foo:\n");
-  fgets(pp, 100, stdin);
-  */
 
-// }// end while
 
 }
 

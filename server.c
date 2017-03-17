@@ -96,12 +96,17 @@ void doprocessing(int sock){
   bzero(str,1000);
   bzero(keyStr,1000);
 
-  n = read(sock, str, 1000);
-  //p = read(sock, keyStr,1000);
-
-  printf("get here after read\n");
+  // receive the plain text
+  n = recv(sock, str, 1000,0);
   
- 
+  // some dummy code
+  write(sock, "foobar", 8);
+  
+  // receive the key
+  p = recv(sock, keyStr,1000,0);
+
+  
+/* 
   // string to hold the cipher. length should be str length
   char cipherStr[strlen(str)+1];
   int i;
@@ -131,8 +136,8 @@ void doprocessing(int sock){
       cipherStr[i] = (total %27) + 65;
     }
    }  // end for loop
-
+*/
   
-  write(sock, str, strlen(str)+1);
+  write(sock, keyStr, strlen(str)+1);
   //printf("after write\n");
 }
