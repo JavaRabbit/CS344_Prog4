@@ -107,21 +107,21 @@ void doprocessing(int sock){
 
 
   // receive the plain text
-  n = recv(sock, str, 6,0);
+  n = recv(sock, str, theSize,0);  // used to be 6
   printf("server got str as %s\n", str); 
  
   // some dummy code
   //write(sock, "foobar", 8);
   
   // receive the key
-  p = recv(sock, keyStr,6,0);
+  p = recv(sock, keyStr,theSize,0);  // used to be 6
   printf("server got keystr as %s\n", keyStr);
   
  
   // string to hold the cipher. length should be str length
-  char cipherStr[strlen(str)+1];
+  char cipherStr[theSize+1];
   int i;
-  for(i = 0; i < strlen(str); i++){
+  for(i = 0; i < theSize; i++){
     int valStr;
     if(str[i] == 32){  // its a space
       valStr = 27;
@@ -149,6 +149,6 @@ void doprocessing(int sock){
    }  // end for loop
 
   
-  write(sock, cipherStr, strlen(str)+1);
+  write(sock, cipherStr, theSize);
   //printf("after write\n");
 }

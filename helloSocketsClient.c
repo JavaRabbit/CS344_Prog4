@@ -169,7 +169,7 @@ int main(int argc, char **argv){
   send(sockfd, sendKey, strlen(sendKey), 0);
    
    // read from sockfd the recvline
-  read(sockfd, recvline, 6);
+  read(sockfd, recvline, msg.theSize);  //used to be 6
 
   
   printf("%s\n", recvline);
