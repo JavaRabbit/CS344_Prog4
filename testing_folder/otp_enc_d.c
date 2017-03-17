@@ -99,16 +99,34 @@ void doprocessing(int sock){
   char type = 'e'; // e for encryption
   //write(sock, &type, sizeof(char));
 
+  //  Recieve an int for the CLIENT TYPE INT
+  //  let encoding, which this is, to be val 10
+  int theType;
+  recv(sock, &theType, 4,0); // int is size 4
+  //printf("server: the type is %d\n", theType);  
+  
+  // send an INT to the CLIENT
+  int myType =10; // let encoding  = 10
+  write(sock, &myType, 4); // char is 4
 
-  // recieve an int
+  // if theType, the value got from client is not 10, 
+  // we don't want to connect to this client
+  if(theType != 10){
+    fprintf(stderr, "Wrong type of client trying to connect.");
+    close(sock);
+
+  }
+
+
+  // recieve an int for the Size
   int theSize;
   recv(sock, &theSize, 4, 0); // 4 for int
-  printf("Server.c: the size is %d\n", theSize);
+  //printf("Server.c: the size is %d\n", theSize);
 
 
   // receive the plain text
   n = recv(sock, str, theSize,0);  // used to be 6
-  printf("server got str as %s and len is %lu\n", str, strlen(str)); 
+  //printf("server got str as %s and len is %lu\n", str, strlen(str)); 
  
   // some dummy code
   //write(sock, "foobar", 8);

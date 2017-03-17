@@ -1,6 +1,2 @@
-Cli: the text in plaintext is NOECCTE
- and len is 8
-HSC:the length of recvline is 8
-HSC: MECABC9
-
-MECABC9
+client here: got back 15 from server
+ABCDEF9

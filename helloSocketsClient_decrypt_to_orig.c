@@ -142,7 +142,7 @@ int main(int argc, char **argv){
  // read the INT the server sent back
  int intFromServer;
  read(sockfd, &intFromServer, 4);
- printf("client here: got back %d from server\n", intFromServer);
+ //printf("client here: got back %d from server\n", intFromServer);
 
 
  // if a wrong type of server is contacted, close connection

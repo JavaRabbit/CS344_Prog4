@@ -102,7 +102,7 @@ void doprocessing(int sock){
  // receive an INT for the CLIENT TYPE
   int theType;
   recv(sock, &theType, 4,0); // int is 4
-  printf("server: type is %d\n", theType);
+  //printf("server: type is %d\n", theType);
 
   // send an INT to the CLIENT
   int myType = 15; // let decoding be equal to 15

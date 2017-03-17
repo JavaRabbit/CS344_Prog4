@@ -8,7 +8,7 @@
 // struct to help store size
 struct myPacket {
  int theSize;
- 
+ int theType; 
 };
 
 
@@ -119,7 +119,7 @@ int main(int argc, char **argv){
   fgets(sendline, 100000, fp_plain) != NULL;
   close(fp_plain); 
   
-  printf("Cli: the text in plaintext is %s and len is %lu\n", sendline, strlen(sendline));
+  //printf("Cli: the text in plaintext is %s and len is %lu\n", sendline, strlen(sendline));
 
 
   /* Read the key  */
@@ -131,24 +131,26 @@ int main(int argc, char **argv){
  }
 
  //fscanf(fp_key, "%s", sendKey);
- // try fgets 
+ // try fgets  to get the key into sendKey
  fgets(sendKey, 100000, fp_key) != NULL;
  //pirintf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
  close(fp_key);
 
-   char type;
-   //  read the type from the server
-   //recv(sockfd, &type, sizeof(char), 0);
+  // try to send an int of 10 (because we want encryption" to server.c
+  msg.theType = 10;  
+  send(sockfd, &(msg.theType), 4, 0); // int is size 4
+ 
+ // read the INT that server sent back
+  int intFromServer;
+  read(sockfd, &intFromServer, 4); // size of int is 4
+  //printf("client here: got back %d from server.\n", intFromServer);
+  
    
-   type = 'e';
-   // check if the type is 'e' for encyption
-   if(type == 'e'){
-     //printf("I can connect\n");
-  } else {
+  // if a wrong type of server is contacted, close connection
+  if(intFromServer != 10){
     fprintf(stderr, "Cannot connect to a Decryption Server.\n");
     close(sockfd);
-  }
-
+   }
 
   // try to send an int to the server
   send(sockfd, &(msg.theSize), sizeof(msg.theSize), 0);
@@ -171,8 +173,8 @@ int main(int argc, char **argv){
    // read from sockfd the recvline
   read(sockfd, recvline, msg.theSize);  //used to be 6
   
-  printf("HSC:the length of recvline is %lu\n", strlen(recvline));
-  printf("HSC: %s\n", recvline);
+  //printf("HSC:the length of recvline is %lu\n", strlen(recvline));
+  //printf("HSC: %s\n", recvline);
   printf("%s", recvline);
 
 
