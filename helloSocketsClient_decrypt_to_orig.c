@@ -98,7 +98,7 @@ int main(int argc, char **argv){
    fprintf(stderr, "No file found\n");
    exit(1);
   } else {
-   //printf("file is found\n");
+   printf("file is found\n");
   }
 
   //  copy the plainText string into sendLine 
@@ -107,7 +107,7 @@ int main(int argc, char **argv){
   fgets(sendline, 7000, fp_plain) != NULL;
   close(fp_plain); 
   
-  //printf("the text in plaintext is %s\n", sendline);
+  printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -121,14 +121,13 @@ int main(int argc, char **argv){
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
  fgets(sendKey, 7000, fp_key) != NULL;
-
-  close(fp_key);
+ printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
+ close(fp_key);
 
  // check if the type is 'd' for decryption
- char type;
- recv(sockfd, &type, sizeof(char), 0);
+ char type = 'd';
+ //recv(sockfd, &type, sizeof(char), 0);
  //printf("the type is %c\n", type);
- printf("%c\n", type);
   if(type == 'd'){ 
    //printf("yes, I can decrypt\n");
   } else {
@@ -142,19 +141,19 @@ int main(int argc, char **argv){
   //write(sockfd, sendline, strlen(sendline)+1);
   
   // try  send  the plain text
-  send(sockfd, sendline, 200 ,0);  
+  send(sockfd, sendline, strlen(sendline) ,0);  
 
 
   //  try a receive  for dummy code
   char foo[440];
-  recv(sockfd, foo, 10,0);
+  //recv(sockfd, foo, 10,0);
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
-  send(sockfd, sendKey, 300, 0);
+  send(sockfd, sendKey, strlen(sendKey), 0);
    
    // read from sockfd the recvline
-  read(sockfd, recvline, 1000);
+  read(sockfd, recvline, 6);
 
 
   printf("%s\n", recvline);
