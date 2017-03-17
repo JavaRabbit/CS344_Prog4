@@ -5,12 +5,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+// struct to help store size
+struct myPacket{
+ int theSize;
+
+};
 int main(int argc, char **argv){
 
  int sockfd, n;
- char sendline[1000];
- char recvline[1000];
- char sendKey[1000];
+ char sendline[100000];
+ char recvline[100000];
+ char sendKey[100000];
  struct sockaddr_in servaddr;
 
  // get portNumber from argv at index 3
@@ -71,6 +76,10 @@ int main(int argc, char **argv){
   exit(1);
  }
 
+// create a struct and assign the size
+struct myPacket msg;
+msg.theSize = countPlainText;
+printf("the msg size is %d\n", msg.theSize);
 
 
  sockfd=socket(AF_INET, SOCK_STREAM, 0);
@@ -85,9 +94,9 @@ int main(int argc, char **argv){
 
  //while(1){
   // clear send and recieve lines
-  bzero(sendline, 1000);
-  bzero(recvline, 1000);
-  bzero(sendKey, 1000);
+  bzero(sendline, 100000);
+  bzero(recvline, 100000);
+  bzero(sendKey, 100000);
  
   
 // read string from user
@@ -98,7 +107,7 @@ int main(int argc, char **argv){
    fprintf(stderr, "No file found\n");
    exit(1);
   } else {
-   //printf("file is found\n");
+   printf("file is found\n");
   }
 
   //  copy the plainText string into sendLine 
@@ -107,7 +116,7 @@ int main(int argc, char **argv){
   fgets(sendline, 7000, fp_plain) != NULL;
   close(fp_plain); 
   
-  //printf("the text in plaintext is %s\n", sendline);
+  printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -121,39 +130,43 @@ int main(int argc, char **argv){
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
  fgets(sendKey, 7000, fp_key) != NULL;
-
-  close(fp_key);
+ printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
+ close(fp_key);
 
  // check if the type is 'd' for decryption
- char type;
- recv(sockfd, &type, sizeof(char), 0);
+ char type = 'd';
+ //recv(sockfd, &type, sizeof(char), 0);
  //printf("the type is %c\n", type);
   if(type == 'd'){ 
    //printf("yes, I can decrypt\n");
   } else {
-   fprintf(stderr, "Can not connect to Encryption server");
+   fprintf(stderr, "Connect connect to Encryption server");
    close(sockfd);
 
  }
+
+
+  // try to send an int to the server
+  send(sockfd, &(msg.theSize), sizeof(msg.theSize),0);
 
 
   // write send line from sockfd
   //write(sockfd, sendline, strlen(sendline)+1);
   
   // try  send  the plain text
-  send(sockfd, sendline, 200 ,0);  
+  send(sockfd, sendline, strlen(sendline) ,0);  
 
 
   //  try a receive  for dummy code
   char foo[440];
-  recv(sockfd, foo, 10,0);
+  //recv(sockfd, foo, 10,0);
   
   //  write send the key
   //write(sockfd, sendKey, strlen(sendKey)+1);
-  send(sockfd, sendKey, 300, 0);
+  send(sockfd, sendKey, strlen(sendKey), 0);
    
    // read from sockfd the recvline
-  read(sockfd, recvline, 1000);
+  read(sockfd, recvline, msg.theSize); // used to be 6
 
 
   printf("%s\n", recvline);

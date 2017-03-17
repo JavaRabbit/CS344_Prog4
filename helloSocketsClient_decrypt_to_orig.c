@@ -13,9 +13,9 @@ struct myPacket{
 int main(int argc, char **argv){
 
  int sockfd, n;
- char sendline[1000];
- char recvline[1000];
- char sendKey[1000];
+ char sendline[100000];
+ char recvline[100000];
+ char sendKey[100000];
  struct sockaddr_in servaddr;
 
  // get portNumber from argv at index 3
@@ -76,10 +76,10 @@ int main(int argc, char **argv){
   exit(1);
  }
 
-// create a struct and assign the size
-struct myPacket msg;
-msg.theSize = countPlainText;
-printf("the msg size is %d\n", msg.theSize);
+ // create a struct and assign the size
+ struct myPacket msg;
+ msg.theSize = countPlainText;
+ //printf("the msg size is %d\n", msg.theSize);
 
 
  sockfd=socket(AF_INET, SOCK_STREAM, 0);
@@ -94,9 +94,9 @@ printf("the msg size is %d\n", msg.theSize);
 
  //while(1){
   // clear send and recieve lines
-  bzero(sendline, 1000);
-  bzero(recvline, 1000);
-  bzero(sendKey, 1000);
+  bzero(sendline, 100000);
+  bzero(recvline, 100000);
+  bzero(sendKey, 100000);
  
   
 // read string from user
@@ -107,7 +107,7 @@ printf("the msg size is %d\n", msg.theSize);
    fprintf(stderr, "No file found\n");
    exit(1);
   } else {
-   printf("file is found\n");
+   //printf("file is found\n");
   }
 
   //  copy the plainText string into sendLine 
@@ -116,7 +116,7 @@ printf("the msg size is %d\n", msg.theSize);
   fgets(sendline, 7000, fp_plain) != NULL;
   close(fp_plain); 
   
-  printf("the text in plaintext is %s\n", sendline);
+  //printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -129,8 +129,8 @@ printf("the msg size is %d\n", msg.theSize);
 
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
- fgets(sendKey, 7000, fp_key) != NULL;
- printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
+ fgets(sendKey, 100000, fp_key) != NULL;
+ //printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
  close(fp_key);
 
  // check if the type is 'd' for decryption

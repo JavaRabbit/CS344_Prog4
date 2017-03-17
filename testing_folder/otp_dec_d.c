@@ -13,8 +13,8 @@ void doprocessing(int sock);
 
 int main(int argc, char *argv[]){
 
- char str[1000];
- char keyStr[1000];  // string to copy the key
+ char str[100000];
+ char keyStr[100000];  // string to copy the key
 
 
  // file descriptors to be used
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
 
  //  Call to socket function
  if((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
-  fprintf(stderr, "socket error ");
+  perror("socket: ");
  }
 
  // clear socket
@@ -58,8 +58,21 @@ int main(int argc, char *argv[]){
  while(1){
   connection_fd = accept(sock_fd, (struct sockaddr*) &client_addr, &client);
 
+  if(connection_fd < 0){
+   fprintf(stderr, "error on accept\n");
+   exit(1);
+
+  }
+
+
+
   //  for each, for off a new process
   pid = fork();
+  /*if(pid < 0){
+    perror("error on fork");
+    exit(1);
+  } */
+
 
   /* This is the child process*/
   if(pid ==0){
@@ -75,38 +88,44 @@ int main(int argc, char *argv[]){
 
 } // end of main
 
-
-/*   THIS IS TO DECIPHER, aka go back to original */
 void doprocessing(int sock){
   int n,p;
-  char str[1000];
-  char keyStr[1000];
-  bzero(str,1000);
-  bzero(keyStr,1000);
+  char str[100000];
+  char keyStr[100000];
+  bzero(str,100000);
+  bzero(keyStr,100000);
 
-  // write a char to the client, with 'd' for decrypt
-  char type = 'd';
-  write(sock, &type, sizeof(char));
+  // write a char to the client
+  char type = 'e'; // e for encryption
+  //write(sock, &type, sizeof(char));
 
 
-  n = recv(sock, str, 1000,0);
-  
+  // recieve an int
+  int theSize;
+  recv(sock, &theSize, 4, 0); // 4 for int
+  printf("the size is %d\n", theSize);
+
+
+  // receive the plain text
+  n = recv(sock, str, theSize,0);  // used to be 6
+  printf("server got str as %s\n", str); 
+ 
   // some dummy code
-  write(sock, "foobar", 8);
-
+  //write(sock, "foobar", 8);
+  
   // receive the key
-  p = recv(sock, keyStr,1000,0);
-
-
-  // printf("gets into fork");
+  p = recv(sock, keyStr,theSize,0);  // used to be 6
+  printf("server got keystr as %s\n", keyStr);
+  
+ 
   // string to hold the cipher. length should be str length
-  char origStr[strlen(str)+1];
+  char cipherStr[theSize+1];
   int i;
-  for(i = 0; i < strlen(str); i++){
+  for(i = 0; i < theSize; i++){
     int valStr;
     if(str[i] == 32){  // its a space
       valStr = 27;
-    } else{  /* not a space so just -65 */
+    } else{  // not a space so just -65 
        valStr  = str[i] - 65;  // don't forget if space
     }
     int valKey;
@@ -121,14 +140,13 @@ void doprocessing(int sock){
 
     // check if the total is 27. If it is, reassign to 32
     if(total == 27){
-      origStr[i] = 32;  // meaning that it will code to a space
+      cipherStr[i] = 32;  // meaning that it will code to a space
     } else {
-      origStr[i] = (total %27) + 65;
+      cipherStr[i] = (total %27) + 65;
     }
-  }  // end for loop
+   }  // end for loop
 
-
-
-  write(sock, origStr, strlen(keyStr)+1);
-
+  
+  write(sock, cipherStr, theSize);
+  //printf("after write\n");
 }

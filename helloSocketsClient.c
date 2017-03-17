@@ -16,9 +16,9 @@ struct myPacket {
 int main(int argc, char **argv){
 
  int sockfd, n;
- char sendline[1000];
- char recvline[1000];
- char sendKey[1000];
+ char sendline[100000];
+ char recvline[100000];
+ char sendKey[100000];
  struct sockaddr_in servaddr;
 
  // get portNumber from argv at index 3
@@ -84,7 +84,7 @@ int main(int argc, char **argv){
  // else create a struct and assign the size
  struct myPacket msg;
  msg.theSize = countPlainText;
- printf("the msg size is %d\n", msg.theSize);
+ //printf("the msg size is %d\n", msg.theSize);
 
  sockfd=socket(AF_INET, SOCK_STREAM, 0);
  bzero(&servaddr, sizeof servaddr);
@@ -98,9 +98,9 @@ int main(int argc, char **argv){
 
  //while(1){
   // clear send and recieve lines
-  bzero(sendline, 1000);
-  bzero(recvline, 1000);
-  bzero(sendKey, 1000);
+  bzero(sendline, 100000);
+  bzero(recvline, 100000);
+  bzero(sendKey, 100000);
  
   
 // read string from user
@@ -116,10 +116,10 @@ int main(int argc, char **argv){
   //  copy the plainText string into sendLine 
   //fscanf(fp_plain, "%s", sendline);
   
-  fgets(sendline, 7000, fp_plain) != NULL;
+  fgets(sendline, 100000, fp_plain) != NULL;
   close(fp_plain); 
   
-  printf("the text in plaintext is %s\n", sendline);
+  //printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -132,9 +132,9 @@ int main(int argc, char **argv){
 
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
- fgets(sendKey, 7000, fp_key) != NULL;
- printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
-  close(fp_key);
+ fgets(sendKey, 100000, fp_key) != NULL;
+ //pirintf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
+ close(fp_key);
 
    char type;
    //  read the type from the server
@@ -143,7 +143,7 @@ int main(int argc, char **argv){
    type = 'e';
    // check if the type is 'e' for encyption
    if(type == 'e'){
-     printf("I can connect\n");
+     //printf("I can connect\n");
   } else {
     fprintf(stderr, "Cannot connect to a Decryption Server.\n");
     close(sockfd);
@@ -170,8 +170,8 @@ int main(int argc, char **argv){
    
    // read from sockfd the recvline
   read(sockfd, recvline, msg.theSize);  //used to be 6
-
   
+  printf("the length of recvline is %lu\n", strlen(recvline));
   printf("%s\n", recvline);
 
 
