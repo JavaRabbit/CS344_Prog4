@@ -73,7 +73,6 @@ int main(int argc, char *argv[]){
     exit(1);
   } */
 
-  printf("gets into fork");
 
   /* This is the child process*/
   if(pid ==0){
@@ -106,7 +105,7 @@ void doprocessing(int sock){
   p = recv(sock, keyStr,1000,0);
 
   
-/* 
+ 
   // string to hold the cipher. length should be str length
   char cipherStr[strlen(str)+1];
   int i;
@@ -136,8 +135,8 @@ void doprocessing(int sock){
       cipherStr[i] = (total %27) + 65;
     }
    }  // end for loop
-*/
+
   
-  write(sock, keyStr, strlen(str)+1);
+  write(sock, cipherStr, strlen(str)+1);
   //printf("after write\n");
 }

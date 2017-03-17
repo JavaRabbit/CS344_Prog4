@@ -84,11 +84,16 @@ void doprocessing(int sock){
   bzero(str,1000);
   bzero(keyStr,1000);
 
-  n = read(sock, str, 1000);
-  p = read(sock, keyStr,1000);
-
-
+  n = recv(sock, str, 1000,0);
   
+  // some dummy code
+  write(sock, "foobar", 8);
+
+  // receive the key
+  p = recv(sock, keyStr,1000,0);
+
+
+   printf("gets into fork");
   // string to hold the cipher. length should be str length
   char origStr[strlen(str)+1];
   int i;

@@ -112,13 +112,13 @@ int main(int argc, char **argv){
   if(fp_key == NULL){
     printf("no key found\n");
   } else {
-    printf("file found\n");
+    //printf("file found\n");
  }
 
  fscanf(fp_key, "%s", sendKey);
  close(fp_key);
 
- printf("the key is: %s\n", sendKey);
+ //printf("the key is: %s\n", sendKey);
 
 
   // write send line from sockfd
