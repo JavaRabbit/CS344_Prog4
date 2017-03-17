@@ -129,7 +129,7 @@ int main(int argc, char **argv){
 
    // check if the type is 'e' for encyption
    if(type == 'e'){
-     //printf("I can connect\n");
+     printf("I can connect\n");
   } else {
     perror("Cannot connect to a Decryption Server.\n");
     close(sockfd);

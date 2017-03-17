@@ -84,6 +84,11 @@ void doprocessing(int sock){
   bzero(str,1000);
   bzero(keyStr,1000);
 
+  // write a char to the client, with 'd' for decrypt
+  char type = 'd';
+  write(sock, &type, sizeof(char));
+
+
   n = recv(sock, str, 1000,0);
   
   // some dummy code

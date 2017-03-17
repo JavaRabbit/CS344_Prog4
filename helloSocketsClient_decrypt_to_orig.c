@@ -123,6 +123,18 @@ int main(int argc, char **argv){
 
   close(fp_key);
 
+ // check if the type is 'd' for decryption
+ char type;
+ recv(sockfd, &type, sizeof(char), 0);
+ printf("the type is %c\n", type);
+ printf("%c\n", type);
+  if(type == 'd'){ 
+   printf("yes, I can decrypt\n");
+  } else {
+   perror("Connect connect to Encryption server");
+   close(sockfd);
+
+ }
 
 
   // write send line from sockfd
@@ -143,8 +155,6 @@ int main(int argc, char **argv){
    // read from sockfd the recvline
   read(sockfd, recvline, 1000);
 
-  
-  printf("%s\n", recvline);
 
 
 
