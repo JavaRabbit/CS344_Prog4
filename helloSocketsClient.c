@@ -108,7 +108,7 @@ int main(int argc, char **argv){
   fgets(sendline, 7000, fp_plain) != NULL;
   close(fp_plain); 
   
-  //printf("the text in plaintext is %s\n", sendline);
+  printf("the text in plaintext is %s\n", sendline);
 
 
   /* Read the key  */
@@ -122,7 +122,7 @@ int main(int argc, char **argv){
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
  fgets(sendKey, 7000, fp_key) != NULL;
-
+ printf("the key is %s and the len is %lu\n", sendkey, strlen(sendKey));
   close(fp_key);
 
    char type;
