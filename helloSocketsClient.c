@@ -94,7 +94,8 @@ int main(int argc, char **argv){
 
  inet_pton(AF_INET, "127.0.0.1", &(servaddr.sin_addr));
 
- connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+ // connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+
 
  //while(1){
   // clear send and recieve lines
@@ -121,6 +122,24 @@ int main(int argc, char **argv){
   
   //printf("Cli: the text in plaintext is %s and len is %lu\n", sendline, strlen(sendline));
 
+  // Iterate through sendline to check for bad characters
+  int iter;
+  // valid characters are value 65-90 inclusive (A-Z), and 32 which is the space
+  for(iter = 0; iter < msg.theSize-1; iter++){    // use theSize -1 since don't check '\n'
+    //  if the value is not between 65 and 90 inclusive, or is not equal to 32
+    //  then it is a bad character. set exit value to 1 and show error to user
+    //printf("gets here to check loop\n");
+    if(sendline[iter] < 65 || sendline[iter] > 90){  // it is <A or > Z
+      if(sendline[iter] == 32) {  // its a space, so its not bad
+        continue; // just continue
+      }
+      // else we've found a bad character.
+      fprintf(stderr, "otd_enc_d error: Input Contains BAD Characters\n");
+      exit(1);
+    }
+  } // end of for(iter.. loop to check for bad values
+
+  connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
   /* Read the key  */
   FILE *fp_key = fopen(argv[2], "r");
