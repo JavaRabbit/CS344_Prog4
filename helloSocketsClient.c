@@ -195,7 +195,7 @@ int main(int argc, char **argv){
   //printf("HSC:the length of recvline is %lu\n", strlen(recvline));
   //printf("HSC: %s\n", recvline);
   printf("%s", recvline);
-
-
+ 
+  exit(0); // sucessful run of opt_enc exits 0
 }
 
