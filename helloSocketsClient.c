@@ -122,7 +122,7 @@ int main(int argc, char **argv){
  //fscanf(fp_key, "%s", sendKey);
  // try fgets 
  fgets(sendKey, 7000, fp_key) != NULL;
- printf("the key is %s and the len is %lu\n", sendkey, strlen(sendKey));
+ printf("the key is %s and the len is %lu\n", sendKey, strlen(sendKey));
   close(fp_key);
 
    char type;
